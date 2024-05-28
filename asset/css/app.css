@@ -1,0 +1,780 @@
+a, button, input, p, textarea, td, li {
+    font-family: "Inter";
+    font-size: 16px;
+    font-weight: 400;
+}
+
+h1 {
+    font-family: "Inter";
+    font-size: 24px;
+    font-style: "normal";
+    font-weight: 500;
+}
+
+label {
+    font-family: "Inter";
+    font-size: 14px;
+    font-style: "normal";
+    font-weight: 400;
+
+    display: block;
+    margin-bottom: 8px;
+}
+
+small {
+    font-family: "Inter";
+    font-size: 12px;
+    font-style: "normal";
+    font-weight: 300;
+}
+
+th {
+    font-family: "Inter";
+    font-size: 16px;
+    font-style: "normal";
+    font-weight: 600;
+}
+
+body {
+    background: var(--backgroundFallback); /* fallback for old browsers */
+    background: var(--backgroundChrome); /* Chrome 10-25, Safari 5.1-6 */
+    background: var(--backgroundFirefox); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0;
+    min-height: 100vh;
+}
+
+body > div {
+    width: 75vw;
+    max-width: 75vw;
+}
+
+@media (max-width: 2561px) {
+    body > div {
+        width: 85vw;
+        max-width: 85vw;
+    }
+}
+
+@media (max-width: 1921px) {
+    body > div {
+        width: 95vw;
+        max-width: 95vw;
+    }
+}
+
+@media (max-width: 1601px) {
+    body > div {
+        width: 98vw;
+        max-width: 98vw;
+    }
+}
+
+menu {
+    list-style: none;
+    margin-bottom: 0;
+    max-width: 90vw;
+    overflow-x: auto;
+    padding: 0 8px 0 0;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+}
+
+menu > li > a {
+    align-items: center;
+    background: var(--menuItemBackground);
+    border-radius: 8px;
+    color: var(--menuItemColor);
+    column-gap: 16px;
+    display: flex;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 20px 24px;
+    min-width: max-content;
+}
+
+menu > li.shown > a > svg {
+    transform: rotate(180deg);
+}
+
+menu > li > a > svg > path {
+    stroke: black;
+}
+
+menu > li > a.active {
+    cursor: default;
+    padding: 24px;
+}
+
+menu > li > a.active, menu a:hover {
+    background: var(--menuItemActiveBackground);
+}
+
+menu.sticky {
+    align-items: end;
+}
+
+menu.sticky > li > a {
+    border-radius: 8px 8px 0 0;
+    padding: 16px 24px 14px;
+}
+
+menu.sticky > li > a.active {
+    padding: 18px 28px;
+}
+
+menu > li.shown > .submenu {
+    display: block;
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    background: var(--submenuBackground);
+    border-radius: 0px 8px 8px 8px;
+    box-shadow: var(--submenuBoxShadow);
+    list-style: none;
+    min-width: 236px;
+    padding: 0;
+}
+
+.submenu a {
+    border-radius: 0;
+    color: var(--menuItemColor);
+    display: block;
+    font-weight: 500;
+    padding: 12px 16px;
+}
+
+.submenu a:hover {
+    background: var(--submenuItemActiveBackground);
+}
+
+.submenu a.active {
+    background: var(--submenuItemActiveBackground);
+    cursor: default;
+}
+
+.submenu li:first-child a {
+    border-radius: 0 8px 0 0;
+}
+
+.submenu li:last-child a {
+    border-radius: 0 0 8px 8px;
+}
+
+section {
+    background-color: var(--sectionBackground);
+    border-radius: 16px;
+    box-shadow: var(--sectionShadow);
+    padding: 25px 32px;
+    margin-bottom: 16px;
+}
+
+section h1 {
+    margin-top: 5px;
+}
+
+menu + section {
+    border-radius: 0 16px 16px 16px;
+}
+
+input:not(.search-input input), textarea, .tox-tinymce, .input, .select .options {
+    border: 0;
+    border-radius: 16px;
+    box-shadow: var(--inputShadow);
+    background-color: var(--inputBackground);
+    color: var(--inputColor);
+    display: block;
+    font-size: 14px;
+    line-height: 16px;
+    margin: 0 0 16px;
+    padding: 12px 16px;
+    width: calc(100% - 32px);
+}
+
+input:not(.search-input input):focus, textarea:focus {
+    background: var(--inputFocusBackground);
+    box-shadow: var(--inputFocusShadow);
+    color: var(--inputFocusColor);
+    outline: 0;
+}
+
+input:not(.search-input input).has-error, textarea.has-error, .tox-tinymce.has-error {
+    margin-bottom: 8px;
+}
+
+.file img[src=""] {
+    display: none;
+}
+
+.file img, .file video {
+    border-radius: 8px;
+    background: var(--inputBackground);
+    box-shadow: var(--inputShadow);
+    margin-bottom: 8px;
+    max-width: 100%;
+}
+
+.file .images {
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    align-items: center;
+}
+
+.file .images img {
+    margin: 5px;
+    max-width: calc(100% - 5px);
+}
+
+.file.multiple .images > .container {
+    margin: 5px;
+    text-align: center;
+}
+
+.file.multiple .images > .container .image-container {
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.file.multiple .images > .container.removed .image-container:before {
+    content: '✖';
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.file.multiple .images > .container .image-container:before {
+    content: '';
+    color: #fff;
+    font-size: 32px;
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 0;
+    left: 0;
+    border-radius: 0 0 8px 8px;
+    transform: translate(50%, 0%);
+}
+
+.file.multiple .images img {
+    margin: 0;
+}
+
+.file.multiple .images .controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.file.multiple .images .controls a {
+    background: #fff;
+    cursor: pointer;
+    height: 24px;
+    width: 24px;
+    text-align: center;
+    border-radius: 50%;
+    box-shadow: var(--checkboxShadow);
+}
+
+.file.multiple .images .controls .move-image-left {
+    padding-right: 1px;
+}
+
+.file.multiple .images .controls .move-image-right {
+    padding-left: 1px;
+}
+
+.file.multiple .images .controls .move-image-left svg {
+    transform: rotate(90deg);
+}
+
+.file.multiple .images .controls .move-image-right svg {
+    transform: rotate(270deg);
+}
+
+.file .input {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px 9px;
+}
+
+.file .input input {
+    display: none;
+}
+
+.search-input {
+    border-radius: 16px;
+    box-shadow: var(--inputShadow);
+    background: var(--inputBackground);
+    color: var(--inputColor);
+    line-height: 16px;
+    margin: 0 0 16px;
+
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+}
+
+.search-input:focus {
+    background: var(--inputFocusBackground);
+    box-shadow: var(--inputFocusShadow);
+    color: var(--inputFocusColor);
+}
+
+.search-input input {
+    border: 0;
+    padding: 16px 8px;
+    min-width: 350px;
+    width: 100%;
+}
+
+.search-input input:focus {
+    outline: 0;
+}
+
+.search-input:not(.select .search-input) .search, .search-input .clear {
+    cursor: pointer;
+}
+
+.search-input:not(.select .search-input) .search svg path, .search-input .clear svg path {
+    fill: var(--searchInputButtonsFill);
+}
+
+.search-input:not(.select .search-input) .search:hover svg path, .search-input .clear:hover svg path {
+    fill: var(--searchInputButtonsHoverFill);
+}
+
+textarea {
+    resize: vertical;
+}
+
+.select {
+    margin: 0 0 16px;
+}
+
+.select:not(.multiple) {
+    padding-bottom: 1px;
+}
+
+.select .input {
+    color: var(--selectInputColor);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 8px;
+    margin-bottom: 0;
+}
+
+.select .input p {
+    font-size: 14px;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.select .input svg {
+    min-width: 12px;
+}
+
+.select .options {
+    display: none;
+    z-index: 10;
+}
+
+.select.shown .input {
+    border-radius: 16px 16px 0 0;
+}
+
+.select.shown .input svg {
+    transform: rotate(180deg);
+}
+
+.select.shown .search-input {
+    background: var(--selectSearchInputBackground);
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.select.shown .search-input input {
+    background: var(--selectSearchInputBackground);
+    padding: 10px 8px;
+}
+
+.select.shown .options {
+    display: block;
+    position: absolute;
+    list-style: none;
+    margin: 0;
+    border-radius: 0 0 16px 16px;
+    padding: 0;
+    padding-bottom: 16px;
+
+    max-height: 300px;
+    overflow: auto;
+}
+
+.select.shown .options li {
+    color: var(--selectOptionColor);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px 16px;
+}
+
+.select.shown .options li {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.select.shown .options li .marked {
+    visibility: hidden;
+}
+
+.select.shown .options li.selected .marked {
+    visibility: visible;
+}
+
+.select.shown .options li.hidden {
+    display: none;
+}
+
+.select.shown .options li:hover {
+    background: var(--selectOptionHoverBackground);
+}
+
+.select.multiple .values.empty {
+    display: none;
+}
+
+.select.multiple .values:not(.empty) + p {
+    display: none;
+}
+
+.select.multiple .input {
+    cursor: default;
+    padding: 7px 8px 6px;
+    width: calc(100% - 16px);
+}
+
+.select.multiple .input p {
+    padding: 6px 0px;
+    padding-left: 8px;
+}
+
+.select.multiple .input > svg {
+    cursor: pointer;
+    padding: 8px;
+}
+
+.select.multiple .values {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-wrap: wrap;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+}
+
+.select.multiple .values li {
+    background: var(--multiSelectValueBackground);
+    border-radius: 40px;
+    font-size: 14px;
+    padding: 2px 4px 2px 14px;
+
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+
+    min-width: max-content;
+}
+
+.select.multiple .values li > svg {
+    cursor: pointer;
+}
+
+.select.multiple .values li > svg path {
+    fill: var(--multiSelectRemoveButtonFill);
+}
+
+.select.multiple .values li > svg:hover path {
+    fill: var(--multiSelectRemoveButtonHoverFill);
+}
+
+.tox-tinymce {
+    border: 0 !important;
+    box-shadow: var(--inputShadow) !important;
+    width: 100%;
+}
+
+small.error {
+    display: block;
+    color: var(--inputErrorColor);
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+button, .button {
+    background: var(--buttonBackground);
+    border: 0;
+    border-radius: 16px;
+    box-shadow: 0px 0px 0px 0px transparent;
+    color: var(--buttonColor);
+    cursor: pointer;
+    display: block;
+    font-weight: 700;
+    line-height: 16px;
+    margin-top: 0px;
+    outline: 0;
+    padding: 16px 48px;
+    width: fit-content;
+}
+
+button:hover, .button:hover {
+    box-shadow: var(--buttonHoverShadow);
+    margin-top: -4px;
+    margin-bottom: 4px;
+}
+
+.button-light {
+    background: var(--buttonLightBackground);
+    color: var(--buttonLightColor);
+    font-weight: 400;
+}
+
+.button-light:hover {
+    box-shadow: var(--buttonLightHoverShadow);
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+}
+
+.breadcrumbs a, .breadcrumbs p {
+    display: inline-block;
+
+    font-size: 14px;
+}
+
+.breadcrumbs a {
+    color: var(--breadcrumbsLinkColor);
+}
+
+.breadcrumbs a:hover {
+    color: var(--breadcrumbsLinkHoverColor);
+}
+
+.breadcrumbs p {
+    color: var(--breadcrumbsTextColor);
+}
+
+.breadcrumbs svg {
+    padding: 0 5px;
+}
+
+.checkbox {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin: 0 0 16px;
+    width: fit-content;
+}
+
+.checkbox div {
+    width: 20px;
+    height: 20px;
+
+    border-radius: 2px;
+    background: var(--checkboxUncheckedFill);
+    box-shadow: var(--checkboxShadow);
+}
+
+.checkbox p {
+    font-size: 14px;
+    margin: 0;
+}
+
+.checkbox p:not(:empty) {
+    margin-left: 12px;
+}
+
+.checkbox .checked, .checkbox .unchecked {
+    display: none;
+    padding: -1px -1px;
+}
+
+.checkbox input {
+    display: none !important;
+}
+
+.checkbox svg {
+    display: block;
+    padding-right: 5px;
+}
+
+.checkbox input:not(:checked) ~ .unchecked, .checkbox input:checked ~ .checked {
+    display: block;
+}
+
+.checkbox .checked svg path {
+    fill: var(--checkboxCheckedFill);
+}
+
+table {
+    width: 100%;
+    display: grid;
+    row-gap: 16px;
+    column-gap: 24px;
+}
+
+table thead, table tbody {
+    display: contents;
+}
+
+table tr {
+    display: contents;
+}
+
+table th {
+    padding-bottom: 8px;
+}
+
+table th, table td {
+    text-align: left;
+}
+
+table td input:not(.search-input input), table td small.error, table td .checkbox {
+    margin-bottom: 0;
+}
+
+table .actions {
+    display: flex;
+    gap: 8px;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 2px;
+}
+
+.pagination > a {
+    padding: 8px 12px;
+    border-radius: 4px;
+    color: var(--paginationLinkColor);
+}
+
+.pagination > a:not([href="#"]):hover {
+    background: var(--paginationLinkHoverBackground);
+}
+
+.pagination > a[href="#"] {
+    cursor: default;
+    background: var(--paginationLinkActiveBackground);
+}
+
+.modal-container {
+    display: none;
+    overflow-y: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #00000050;
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+}
+
+.modal-container > div {
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+    width: 100vw;
+}
+
+.modal {
+    background-color: var(--sectionBackground);
+    border-radius: 16px;
+    box-shadow: var(--sectionShadow);
+    padding: 25px 32px;
+    text-align: center;
+}
+
+.modal label {
+    text-align: left;
+}
+
+.modal > .heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal > div:not(.heading):not(.footer) {
+    margin-top: 24px;
+}
+
+.modal > .footer {
+    margin-top: 24px;
+    margin-bottom: 20px;
+}
+
+.modal > div {
+    min-width: 500px;
+    max-width: 550px;
+}
+
+.modal-close {
+    cursor: pointer;
+}
+
+.modal-close svg path {
+    fill: #444;
+}
+
+.modal-close:hover svg path {
+    fill: #111;
+}
+
+/** Shortcuts **/
+.align-items-center {
+    align-items: center;
+}
+
+.flex {
+    display: flex;
+    gap: 16px;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.margin-bottom-0 {
+    margin-bottom: 0 !important;
+}

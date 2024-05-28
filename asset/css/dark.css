@@ -1,0 +1,38 @@
+:root {
+    --backgroundFallback: #0f0c29;
+    --backgroundChrome: -webkit-linear-gradient(
+        to right,
+        #0f0c29,
+        #302b63,
+        #24243e
+    );
+    --backgroundFirefox: linear-gradient(
+        to right,
+        #0f0c29,
+        #302b63,
+        #24243e
+    );
+
+    --sectionBackground: #120E36;
+    --sectionShadow: 4px 0px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+    --inputBackground: #7465811A;
+    --inputColor: #999;
+    --inputShadow: 0px 4px 4px 0px #00000040;
+    --inputFocusBackground: #74658166;
+    --inputFocusShadow: 0px 8px 4px 0px #00000040;
+    --inputFocusColor: #eee;
+
+    --buttonBackground: #4700C2;
+    --buttonColor: #F0F6F6;
+    --buttonHoverShadow: 0px 4px 0px 0px #350092;
+    --buttonLightBackground: #e0e6e6;
+    --buttonLightColor: #201926;
+    --buttonLightHoverShadow: 0px 4px 0px 0px #909696;
+
+    --menuItemActiveBackground: #120E36;
+    --menuItemBackground: #1A163E;
+    --menuItemColor: #999;
+    --menuItemHoverBackground: #221E46;
+    --menuItemHoverColor: #eee;
+}

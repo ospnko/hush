@@ -1,0 +1,55 @@
+:root {
+    --backgroundFallback: #BDB7FE;
+    --backgroundChrome: -webkit-linear-gradient(105deg, #BDB7FE 6.34%, #D3CDFD 95.61%);
+    --backgroundFirefox: linear-gradient(105deg, #BDB7FE 6.34%, #D3CDFD 95.61%);
+
+    --breadcrumbsLinkColor: #8B8B8B;
+    --breadcrumbsLinkHoverColor: #282828;
+    --breadcrumbsTextColor: #282828;
+
+    --sectionBackground: #F6F3F9;
+    --sectionShadow: none;
+
+    --inputBackground: #fff;
+    --inputColor: #262626;
+    --inputErrorColor: crimson;
+    --inputShadow: 0px 4px 4px 0px #2F485833;
+    --inputFocusBackground: #fff;
+    --inputFocusShadow: 0px 8px 4px 0px #2F485833;
+    --inputFocusColor: #555;
+    --searchInputButtonsFill: #C0C0D0;
+    --searchInputButtonsHoverFill: #ABABBB;
+
+    --buttonBackground: #4700C2;
+    --buttonColor: #F0F6F6;
+    --buttonHoverShadow: 0px 4px 0px 0px #170092;
+    --buttonLightBackground: #fff;
+    --buttonLightColor: #201926;
+    --buttonLightHoverShadow: 0px 4px 0px 0px #e0e6e6;
+
+    --menuItemActiveBackground: linear-gradient(0deg, #F6F3F9 50.67%, #FFF 90%);
+    --menuItemBackground: #F3EEFF;
+    --menuItemColor: #393734;
+    --menuItemHoverBackground: #221E46;
+    --menuItemHoverColor: #eee;
+
+    --submenuBackground: linear-gradient(180deg, #F6F3F9 0.34%, #FFF 100%);
+    --submenuBoxShadow: 0px 4px 4px 0px rgba(189, 183, 254, 0.25);
+    --submenuItemActiveBackground: #E6E6F6;
+
+    --checkboxUncheckedFill: #FFF;
+    --checkboxCheckedFill: #4700C2;
+    --checkboxShadow: 0px 4px 4px 0px rgba(189, 183, 254, 0.25);
+
+    --paginationLinkColor: #262626;
+    --paginationLinkHoverBackground: #ECE4FF;
+    --paginationLinkActiveBackground: #ECE4FF;
+
+    --selectInputColor: #262626;
+    --selectOptionColor: #262626;
+    --selectOptionHoverBackground: #E6E6F6;
+    --selectSearchInputBackground: #E6E6F6;
+    --multiSelectRemoveButtonFill: #C0C0D0;
+    --multiSelectRemoveButtonHoverFill: #ABABBB;
+    --multiSelectValueBackground: #E6E6F6;
+}
