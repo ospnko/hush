@@ -1,6 +1,7 @@
 {
     "name": "ospnko/hush",
     "description": "Components for building dashboards in PHP",
+    "license": "LGPL-3.0",
     "type": "library",
     "autoload": {
         "psr-4": {

@@ -274,7 +274,6 @@ const fileMultipleInput = () => document.querySelectorAll('.file.multiple input[
 });
 
 const fileMultipleInputUpdateValue = (wrapper, orderingContent) => {
-    console.log('#1', orderingContent);
     wrapper.dataset.value = JSON.stringify(orderingContent);
 
     let images = [];
@@ -294,7 +293,6 @@ const fileMultipleInputUpdateValue = (wrapper, orderingContent) => {
         wrapper.querySelector('.input').appendChild(input);
     });
 
-    console.log('#2', orderingContent, inputsFromJson(orderingContent, `${wrapper.dataset.name}_extra`));
     inputsFromJson(orderingContent, `${wrapper.dataset.name}_extra`).forEach(input => {
         wrapper.querySelector('.input').appendChild(input);
     });
