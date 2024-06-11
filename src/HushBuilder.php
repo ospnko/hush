@@ -65,7 +65,7 @@ class HushBuilder implements RenderableInterface
     }
 
     /**
-     * @param string|callable($builder:Breadcrumb):Breadcrumb $crumbs
+     * @param callable($builder:Breadcrumb):Breadcrumb $crumbs
      */
     public function breadcrumbs(callable $crumbs): self
     {
@@ -215,19 +215,20 @@ class HushBuilder implements RenderableInterface
     public function if(
         bool $condition,
         callable $content,
-        bool $isModal = false,
     ): self {
         if (!$condition) {
             return $this;
         }
 
-        if ($isModal) {
-            $this->modals[] = $content(new self());
+        $hushBuilder = $content(new self());
+
+        if ($hushBuilder->components === []) {
+            $this->modals[] = $hushBuilder;
 
             return $this;
         }
 
-        $this->components[] = $content(new self());
+        $this->components[] = $hushBuilder;
 
         return $this;
     }
@@ -547,6 +548,23 @@ class HushBuilder implements RenderableInterface
     }
 
     public function render(): string
+    {
+        $content = $this->renderRaw();
+
+        return preg_replace([
+            "/\n/",
+            '/>(  )*/',
+            '/[ ]*>/',
+            '/[ ]*</',
+        ], [
+            '',
+            '>',
+            '>',
+            '<',
+        ], $content);
+    }
+
+    public function renderRaw(): string
     {
         $content = $this->renderComponentsArray($this->components);
         $modalContent = $this->renderComponentsArray($this->modals);

@@ -13,7 +13,7 @@ The package to build dashboards for PHP web applications with zero dependencies.
 
 The entry point for all functionality is the `HushBuilder` class. It provides methods to work with almost every package component.
 
-Every page starts with the layout. To configure the layout you need to call the `->layout()` method:
+Every page starts with a layout. To configure the layout you need to call the `->layout()` method:
 
 ```php
 <?php
@@ -217,7 +217,7 @@ $hush->form(
     method: 'POST',
     action: '/dashboard/products',
     content: fn (HushBuilder $hush) => $hush->block(),
-    csrfField: '<you csrf field if exists>',
+    csrfField: '<your csrf field if exists>',
     attributes: ['class' => 'my-form'],
 );
 ```

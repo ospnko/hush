@@ -14,5 +14,7 @@
             "email": "artur.osypenko@outlook.com"
         }
     ],
-    "require": {}
+    "require-dev": {
+        "phpunit/phpunit": "^11.2"
+    }
 }
