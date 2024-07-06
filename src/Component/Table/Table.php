@@ -47,6 +47,7 @@ class Table implements ComponentInterface
 
     /**
      * @param string|Closure(row:T):string $link
+     * @param Closure(row:T):bool $condition
      */
     public function addAction(
         string $note,
@@ -115,7 +116,7 @@ class Table implements ComponentInterface
     /**
      * @param T $row
      */
-    public function renderBodyRow(array|object $row): string
+    public function renderBodyRow(mixed $row): string
     {
         $result = [];
 
@@ -151,7 +152,7 @@ class Table implements ComponentInterface
     /**
      * @param T $row
      */
-    private function renderBodyRowActions(array|object $row): string
+    private function renderBodyRowActions(mixed $row): string
     {
         $result = [];
 
