@@ -40,12 +40,14 @@ class Pagination implements ComponentInterface
         foreach ($this->buildPages() as $page) {
             $params = $this->params;
             $params['page'] = $page;
+            $isCurrent = $page === $this->currentPage;
 
             $result[] = (new Link(
-                link: $page !== $this->currentPage
+                link: $page !== null && !$isCurrent
                     ? $this->baseLink . '?' . http_build_query($params)
                     : '#',
-                content: $page,
+                content: $page ?? '...',
+                attributes: $isCurrent ? ['class' => 'current'] : [],
             ))->render();
         }
 
@@ -67,7 +69,7 @@ class Pagination implements ComponentInterface
             ? [1, 2, 3, 4, 5]
             : [1, 2, 3];
 
-        $pages[$isCurrentAtStart ? 5 : 3] = '...';
+        $pages[$isCurrentAtStart ? 5 : 3] = null;
 
         if ($this->currentPage > 3) {
             for ($i = -1; $i <= 1; $i++) {
@@ -77,7 +79,7 @@ class Pagination implements ComponentInterface
             }
 
             if ($this->currentPage + 1 < $this->pages) {
-                $pages[$this->currentPage + 1] = '...';
+                $pages[$this->currentPage + 1] = null;
             }
         }
 

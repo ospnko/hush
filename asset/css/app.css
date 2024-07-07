@@ -688,7 +688,7 @@ table .actions {
     background: var(--paginationLinkHoverBackground);
 }
 
-.pagination > a[href="#"] {
+.pagination > .current {
     cursor: default;
     background: var(--paginationLinkActiveBackground);
 }
