@@ -547,9 +547,9 @@ class HushBuilder implements RenderableInterface
         return $this;
     }
 
-    public function render(): string
+    public function renderMinimized(): string
     {
-        $content = $this->renderRaw();
+        $content = $this->render();
 
         return preg_replace([
             "/\n/",
@@ -564,7 +564,7 @@ class HushBuilder implements RenderableInterface
         ], $content);
     }
 
-    public function renderRaw(): string
+    public function render(): string
     {
         $content = $this->renderComponentsArray($this->components);
         $modalContent = $this->renderComponentsArray($this->modals);
