@@ -569,6 +569,7 @@ const singleSelectInputOptionClickListener = event => {
 
     option.classList.add('selected');
     input.querySelector('p').textContent = selectedText;
+    showSelectDropdown(input);
 };
 
 const singleSelectInput = () => document.querySelectorAll('.select:not(.multiple)').forEach(select => {
