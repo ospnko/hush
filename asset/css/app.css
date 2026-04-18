@@ -88,29 +88,27 @@ a, button, input, p, textarea, td, li {
 }
 
 .admin-filter-link {
-    padding: 8px 20px;
-    background: var(--buttonLightBackground, rgba(0, 0, 0, 0.05));
-    color: var(--inputColor);
+    padding: 6px 16px;
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--breadcrumbsTextColor);
     border-radius: 12px;
     font-size: 13px;
     font-weight: 600;
     text-decoration: none;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid transparent;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    border: none;
 }
 
 .admin-filter-link:hover {
-    background: var(--buttonBackground);
-    color: var(--buttonColor);
-    transform: translateY(-4px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1), var(--buttonHoverShadow);
+    background: color-mix(in srgb, var(--buttonBackground) 12%, transparent);
+    color: var(--buttonBackground);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 .admin-filter-link.active {
     background: var(--buttonBackground);
     color: var(--buttonColor);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
     transform: translateY(0);
 }
 
@@ -826,12 +824,59 @@ label {
 }
 
 .list-header {
-    padding: 16px 0 16px 16px;
+    padding: 0 0 16px;
 }
 
-.list-header-subtitle {
-    opacity: 0.5;
-    font-weight: 500;
+
+.list-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.list-header-actions .block-search {
+    margin-bottom: 0;
+}
+
+.list-header-actions .block-search form {
+    width: 480px;
+    height: 48px;
+}
+
+.list-header-actions .block-search input.search-input {
+    border-radius: 12px !important;
+}
+
+.list-header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--menuItemBackground);
+    border-radius: 12px;
+    padding: 10px 20px 10px 12px;
+}
+
+.list-header-badge h1 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: 0;
+}
+
+.list-header-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--menuItemActiveBackground);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.list-header-icon svg {
+    width: 16px;
+    height: 16px;
 }
 
 .login-card {
@@ -914,7 +959,7 @@ menu {
 menu + * {
     margin-top: 0 !important;
     border-top-left-radius: 0 !important;
-    border-top-right-radius: 24px !important;
+    border-top-right-radius: 12px !important;
     position: relative;
     top: -1px;
     z-index: 10;
@@ -1094,6 +1139,19 @@ menu.sticky > li > a.active {
     color: var(--breadcrumbsTextColor);
 }
 
+.order-filters-row {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.order-filters-row .utility-block {
+    flex: 1;
+    min-width: 0;
+    margin-bottom: 0;
+}
+
 .order-show-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1116,17 +1174,19 @@ menu.sticky > li > a.active {
 .pagination > a {
     padding: 8px 14px;
     border-radius: 10px;
-    color: var(--paginationLinkColor);
+    background: var(--sectionBackground);
+    color: var(--breadcrumbsTextColor);
     font-size: 14px;
     font-weight: 500;
     transition: all 0.2s ease;
+    box-shadow: var(--sectionShadow);
 }
 
 .pagination > a:not([href="#"]):hover {
     background: var(--buttonBackground);
     color: var(--buttonColor);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), var(--buttonHoverShadow);
+    box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.15), var(--buttonHoverShadow);
 }
 
 .pagination > .current {
@@ -1137,7 +1197,6 @@ menu.sticky > li > a.active {
     border-radius: 10px;
     font-size: 14px;
     font-weight: 600;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
 .progress-bar {
@@ -1239,7 +1298,7 @@ menu.sticky > li > a.active {
 section, .block {
     background-color: var(--sectionBackground);
     border: none;
-    border-radius: 24px;
+    border-radius: 12px;
     box-shadow: var(--sectionShadow);
     padding: 32px;
     margin: 0 0 24px;
@@ -1682,6 +1741,34 @@ table td input:not(.search-input input), table td small.error, table td .checkbo
     margin-bottom: 0;
 }
 
+.action-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--breadcrumbsTextColor);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    box-shadow: none;
+    text-decoration: none;
+}
+
+.action-icon-btn:hover {
+    background: color-mix(in srgb, var(--buttonBackground) 12%, transparent);
+    color: var(--buttonBackground);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.action-icon-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
 table .actions {
     display: flex;
     gap: 8px;
@@ -1705,8 +1792,10 @@ table td .actions a {
 }
 
 table td .actions a:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1), var(--buttonHoverShadow);
+    background: color-mix(in srgb, var(--buttonBackground) 12%, transparent);
+    color: var(--buttonBackground);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 table td .actions a:active {
@@ -1721,21 +1810,17 @@ table td .actions a svg {
 
 table td .actions a[title*="Delete"]:hover,
 table td .actions a[href*="delete"]:hover {
-    background: #ef4444;
-    color: white;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1), var(--buttonRedShadow);
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    box-shadow: none;
 }
 
 table td .actions a[title*="Edit"]:hover,
-table td .actions a[href*="edit"]:hover {
-    background: var(--buttonBackground);
-    color: var(--buttonColor);
-}
-
+table td .actions a[href*="edit"]:hover,
 table td .actions a[title*="View"]:hover,
 table td .actions a[href*="view"]:hover {
-    background: var(--buttonBackground);
-    color: var(--buttonColor);
+    background: color-mix(in srgb, var(--buttonBackground) 12%, transparent);
+    color: var(--buttonBackground);
 }
 
 .table-responsive {
@@ -1880,12 +1965,11 @@ th {
 }
 
 .utility-block {
-    width: fit-content !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding: 24px 48px !important;
+    width: fit-content;
+    margin-left: 0;
+    margin-right: auto;
+    padding: 12px 32px;
     min-width: 400px;
-    margin-bottom: 32px !important;
 }
 
 .utility-block .flex {

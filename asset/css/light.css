@@ -1,10 +1,10 @@
 :root {
-    --backgroundStart: #f8fafc;
-    --backgroundEnd: #e0f2fe;
-    --backgroundAccent: #f1f5f9; /* Slate 100 instead of green */
-    --backgroundFallback: #f8fafc;
-    --backgroundChrome: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
-    --backgroundFirefox: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+    --backgroundStart: #f8f8fc;
+    --backgroundEnd: #eeeef8;
+    --backgroundAccent: #f3f3fa;
+    --backgroundFallback: #f8f8fc;
+    --backgroundChrome: linear-gradient(135deg, #f8f8fc 0%, #eeeef8 100%);
+    --backgroundFirefox: linear-gradient(135deg, #f8f8fc 0%, #eeeef8 100%);
 
     --breadcrumbsLinkColor: #475569;
     --breadcrumbsLinkHoverColor: #0f172a;

@@ -638,25 +638,36 @@ class HushBuilder implements RenderableInterface
      */
     public function listHeader(
         string $title,
-        string $subtitle = '',
         string $createLabel = '',
         string $createUrl = '',
+        string $icon = '',
+        string $searchName = '',
+        string $searchPlaceholder = '',
+        string $searchValue = '',
+        string $searchAction = '',
+        array $searchHiddenFields = [],
     ): self {
         return $this->flex(
             ['class' => 'justify-content-between align-items-center list-header'],
             [],
-            fn(self $h) => $h->flex(
-                ['class' => 'flex-column'],
-                [],
-                fn(self $h) => $h->heading($title, ['class' => 'margin-bottom-0']),
-                fn(self $h) => $h->if(
-                    $subtitle !== '',
-                    fn(self $h) => $h->html('<small class="list-header-subtitle">' . htmlspecialchars($subtitle) . '</small>')
-                ),
+            fn(self $h) => $h->div(
+                fn(self $h) => $h
+                    ->if($icon !== '', fn(self $h) => $h->div(fn(self $h) => $h->html($icon), ['class' => 'list-header-icon']))
+                    ->heading($title, ['class' => 'margin-bottom-0']),
+                ['class' => 'list-header-badge'],
             ),
-            fn(self $h) => $h->if(
-                $createLabel !== '' && $createUrl !== '',
-                fn(self $h) => $h->button($createLabel, $createUrl),
+            fn(self $h) => $h->div(
+                fn(self $h) => $h
+                    ->if($searchName !== '', fn(self $h) => $h->blockInputSearch(
+                        name: $searchName,
+                        placeholder: $searchPlaceholder,
+                        value: $searchValue,
+                        action: $searchAction,
+                        attributes: ['class' => 'compact'],
+                        hiddenFields: $searchHiddenFields,
+                    ))
+                    ->if($createLabel !== '' && $createUrl !== '', fn(self $h) => $h->button($createLabel, $createUrl)),
+                ['class' => 'list-header-actions'],
             ),
         );
     }
