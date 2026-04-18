@@ -20,6 +20,7 @@ class Layout implements ComponentInterface
         private string $customEndBodyHtml = '',
         private string $customEndHeadHtml = '',
         private string $modalContent = '',
+        private string $bodyClass = '',
     ) {
         $this->csrfToken = htmlspecialchars($this->csrfToken);
         $this->cssPath = htmlspecialchars($this->cssPath);
@@ -40,6 +41,8 @@ class Layout implements ComponentInterface
                 ? ['style' => 'display: block']
                 : []
         ))->render();
+
+        $bodyClass = $this->bodyClass !== '' ? ' class="' . htmlspecialchars($this->bodyClass) . '"' : '';
 
         return <<<HTML
         <!DOCTYPE html>
@@ -63,7 +66,7 @@ class Layout implements ComponentInterface
             $this->customEndHeadHtml
         </head>
 
-        <body>
+        <body$bodyClass>
             <div id="app-root">
                 <div id="app-content">
                     $this->content

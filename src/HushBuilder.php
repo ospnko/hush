@@ -40,8 +40,8 @@ use Ospnko\Hush\Component\RawText;
 use Ospnko\Hush\Component\Style;
 use Ospnko\Hush\Component\Table\Table;
 use Ospnko\Hush\Component\Text;
+use Ospnko\Hush\Component\TitleBlock;
 use Ospnko\Hush\Component\Video;
-use Ospnko\Hush\Enum\Svg;
 use Ospnko\Hush\Interface\ComponentInterface;
 use Ospnko\Hush\Interface\RenderableInterface;
 
@@ -591,6 +591,7 @@ class HushBuilder implements RenderableInterface
         string $title,
         string $customEndBodyHtml = '',
         string $customEndHeadHtml = '',
+        string $bodyClass = '',
     ): self {
         $this->layout = new Layout(
             csrfToken: $csrfToken,
@@ -604,6 +605,7 @@ class HushBuilder implements RenderableInterface
             title: $title,
             customEndBodyHtml: $customEndBodyHtml,
             customEndHeadHtml: $customEndHeadHtml,
+            bodyClass: $bodyClass,
         );
 
         return $this;
@@ -641,7 +643,7 @@ class HushBuilder implements RenderableInterface
         string $createUrl = '',
     ): self {
         return $this->flex(
-            ['class' => 'justify-content-between align-items-center mb-5'],
+            ['class' => 'justify-content-between align-items-center list-header'],
             [],
             fn(self $h) => $h->flex(
                 ['class' => 'flex-column'],
@@ -930,6 +932,43 @@ class HushBuilder implements RenderableInterface
         $this->components[] = new Text(
             text: $text,
             attributes: $attributes,
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param callable($menu:Menu):Menu $menu
+     * @param array<array{text:string,link:string}> $breadcrumbs
+     */
+    public function titleBlock(
+        callable $menu,
+        string $username,
+        string $userRole,
+        array $breadcrumbs,
+        string $logoutLink,
+        string $csrfToken,
+        string $themeToggleLink = '',
+        string $themeToggleLabel = '',
+        string $themeToggleClass = '',
+    ): self {
+        $menuHtml = $menu(new Menu(attributes: ['class' => 'sticky main-menu']))->render();
+
+        $breadcrumb = new Breadcrumb([]);
+        foreach ($breadcrumbs as $item) {
+            $breadcrumb->addItem((string)($item['text'] ?? ''), (string)($item['link'] ?? ''));
+        }
+
+        $this->components[] = new TitleBlock(
+            menuHtml: $menuHtml,
+            username: $username,
+            userRole: $userRole,
+            breadcrumbsHtml: $breadcrumb->render(),
+            logoutLink: $logoutLink,
+            csrfToken: $csrfToken,
+            themeToggleLink: $themeToggleLink,
+            themeToggleLabel: $themeToggleLabel,
+            themeToggleClass: $themeToggleClass,
         );
 
         return $this;

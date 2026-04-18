@@ -39,7 +39,7 @@ class ConfirmModal implements ComponentInterface
                 <p class="confirm-modal-message">{$this->message}</p>
                 <div class="confirm-modal-actions">
                     <a class="button button-light modal-close">Cancel</a>
-                    <button type="submit" class="button confirm-modal-danger-btn">$confirmLabel</button>
+                    <button type="button" class="button confirm-modal-danger-btn async-modal-link" data-is_form="1">$confirmLabel</button>
                 </div>
             </form>
         </div>
