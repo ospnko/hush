@@ -31,6 +31,7 @@ class Checkbox implements ComponentInterface
         $checkmarkSvg = Svg::Checkmark->render();
 
         return <<<HTML
+        <input type="hidden" name="$this->name" value="0">
         <label $attributes>
             <input type="checkbox" name="$this->name" value="$this->value" $isCheckedString>
             <div class="checked">

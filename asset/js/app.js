@@ -28,7 +28,7 @@ const pageReload = () => document.querySelectorAll('.page-reload').forEach(link 
     link.addEventListener('click', event => {
         event.preventDefault();
 
-        location.reload();
+        location.href = location.href;
     });
 });
 
@@ -701,10 +701,74 @@ const tableActionsShortcuts = () => {
         }));
 };
 
+const logoutLink = () => document.querySelectorAll('.logout-link').forEach(link => {
+    link.addEventListener('click', event => {
+        event.preventDefault();
+
+        const token = link.dataset.token || csrfToken;
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = link.href;
+
+        const tokenInput = document.createElement('input');
+        tokenInput.type = 'hidden';
+        tokenInput.name = '_token';
+        tokenInput.value = token;
+
+        form.appendChild(tokenInput);
+        document.body.appendChild(form);
+        form.submit();
+    });
+});
+
+const closeSelectOnOutsideClick = () => {
+    document.addEventListener('click', event => {
+        const select = event.target.closest('.select');
+
+        document.querySelectorAll('.select.shown').forEach(openSelect => {
+            if (openSelect !== select) {
+                openSelect.classList.remove('shown');
+            }
+        });
+    });
+};
+
+const closeModalOnOutsideClick = () => {
+    document.addEventListener('click', event => {
+        const modalContainer = document.querySelector('.modal-container');
+
+        if (!modalContainer || modalContainer.style.display !== 'block') {
+            return;
+        }
+
+        const modal = event.target.closest('.modal');
+
+        if (!modal) {
+            event.preventDefault();
+
+            document.querySelector('body').setAttribute('style', '');
+            modalContainer.setAttribute('style', '');
+            modalContainer.querySelector('div').innerHTML = '';
+        }
+    });
+};
+
+const fixAutofillSearchInput = () => {
+    document.querySelectorAll('.block-search input[data-hush-search-input]').forEach(input => {
+        if (input.value.length > 0) {
+            input.parentElement.classList.add('has-content');
+        }
+    });
+};
+
 const init = () => {
     closeModal();
     openAsyncModal();
     pageReload();
+    logoutLink();
+    closeSelectOnOutsideClick();
+    closeModalOnOutsideClick();
+    fixAutofillSearchInput();
 
     fileInput();
     fileMultipleInput();

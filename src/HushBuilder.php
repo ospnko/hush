@@ -3,11 +3,14 @@
 namespace Ospnko\Hush;
 
 use Closure;
+use Ospnko\Hush\Component\Badge;
 use Ospnko\Hush\Component\Block;
+use Ospnko\Hush\Component\BlockInputSearch;
 use Ospnko\Hush\Component\Breadcrumb\Breadcrumb;
 use Ospnko\Hush\Component\Button;
 use Ospnko\Hush\Component\Div;
 use Ospnko\Hush\Component\Error;
+use Ospnko\Hush\Component\FilterBar;
 use Ospnko\Hush\Component\Form;
 use Ospnko\Hush\Component\Heading;
 use Ospnko\Hush\Component\Image;
@@ -26,6 +29,11 @@ use Ospnko\Hush\Component\Layout;
 use Ospnko\Hush\Component\Link;
 use Ospnko\Hush\Component\Menu\Menu;
 use Ospnko\Hush\Component\Modal;
+use Ospnko\Hush\Component\Modal\ConfirmModal;
+use Ospnko\Hush\Component\Modal\ErrorModal;
+use Ospnko\Hush\Component\Modal\InfoModal;
+use Ospnko\Hush\Component\Modal\SuccessModal;
+use Ospnko\Hush\Component\Modal\WarningModal;
 use Ospnko\Hush\Component\Pagination;
 use Ospnko\Hush\Component\RawHtml;
 use Ospnko\Hush\Component\RawText;
@@ -33,6 +41,7 @@ use Ospnko\Hush\Component\Style;
 use Ospnko\Hush\Component\Table\Table;
 use Ospnko\Hush\Component\Text;
 use Ospnko\Hush\Component\Video;
+use Ospnko\Hush\Enum\Svg;
 use Ospnko\Hush\Interface\ComponentInterface;
 use Ospnko\Hush\Interface\RenderableInterface;
 
@@ -48,6 +57,20 @@ class HushBuilder implements RenderableInterface
 
     /**
      * @param array<string,string> $attributes
+     */
+    public function badge(string $text, string $color = 'gray', array $attributes = []): self
+    {
+        $this->components[] = new Badge(
+            text: $text,
+            color: $color,
+            attributes: $attributes,
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param array<string,string> $attributes
      * @param callable($builder:self):self $content
      */
     public function block(
@@ -59,6 +82,31 @@ class HushBuilder implements RenderableInterface
             headline: (new RawText($headline))->render(),
             content: $content(new self())->render(),
             attributes: $attributes,
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param array<string,string> $attributes
+     */
+    public function blockInputSearch(
+        string $name,
+        string $placeholder = '',
+        string $value = '',
+        string $action = '',
+        string $method = 'GET',
+        array $attributes = [],
+        array $hiddenFields = []
+    ): self {
+        $this->components[] = new BlockInputSearch(
+            name: $name,
+            placeholder: $placeholder,
+            value: $value,
+            action: $action,
+            method: $method,
+            attributes: $attributes,
+            hiddenFields: $hiddenFields,
         );
 
         return $this;
@@ -131,12 +179,77 @@ class HushBuilder implements RenderableInterface
         return $this;
     }
 
+    public function confirmModal(
+        string $title,
+        string $message,
+        string $actionUrl,
+        string $method = 'POST',
+        string $confirmLabel = 'Confirm',
+        string $csrfToken = '',
+    ): self {
+        $this->modals[] = new ConfirmModal(
+            title: $title,
+            message: $message,
+            actionUrl: $actionUrl,
+            method: $method,
+            confirmLabel: $confirmLabel,
+            csrfToken: $csrfToken,
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param callable(self):self $content
+     * @param array<string,string> $attributes
+     */
+    public function div(callable $content, array $attributes = []): self
+    {
+        $this->components[] = new Div(
+            content: $content(new self())->render(),
+            attributes: $attributes,
+        );
+
+        return $this;
+    }
+
+    public function errorModal(string $heading = 'Error!', string $text = ''): self
+    {
+        $this->modals[] = new ErrorModal(heading: $heading, text: $text);
+
+        return $this;
+    }
+
     /**
      * @param string[] $errors
      */
     public function errors(array $errors): self
     {
         $this->components[] = new Error($errors);
+
+        return $this;
+    }
+
+    /**
+     * @param array<string,string> $options
+     * @param array<string,string> $extraParams
+     */
+    public function filterBar(
+        string $label,
+        array $options,
+        string $active,
+        string $baseUrl,
+        string $paramName,
+        array $extraParams = [],
+    ): self {
+        $this->components[] = new FilterBar(
+            label: $label,
+            options: $options,
+            active: $active,
+            baseUrl: $baseUrl,
+            paramName: $paramName,
+            extraParams: $extraParams,
+        );
 
         return $this;
     }
@@ -186,6 +299,46 @@ class HushBuilder implements RenderableInterface
             action: $action,
             content: $content(new self())->render(),
             csrfField: $csrfField,
+            attributes: $attributes,
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param array<string,string> $attributes
+     */
+    public function formActions(
+        string $submitLabel = 'Save',
+        string $cancelUrl = '',
+        array $attributes = [],
+    ): self {
+        $attributes['class'] = 'mt-4' . (isset($attributes['class']) ? ' ' . $attributes['class'] : '');
+        $attributes['style'] = 'gap: 12px' . (isset($attributes['style']) ? '; ' . $attributes['style'] : '');
+
+        return $this->flex(
+            $attributes,
+            [],
+            fn(self $h) => $h->button($submitLabel, isAsyncModal: true, attributes: ['type' => 'submit']),
+            fn(self $h) => $h->if(
+                $cancelUrl !== '',
+                fn(self $h) => $h->button('Cancel', $cancelUrl, attributes: ['class' => 'button-light']),
+            ),
+        );
+    }
+
+    /**
+     * @param callable(self):self $content
+     * @param array<string,string> $attributes
+     */
+    public function grid(callable $content, array $attributes = []): self
+    {
+        if (!isset($attributes['class'])) {
+            $attributes['style'] = 'display:grid;' . ($attributes['style'] ?? '');
+        }
+
+        $this->components[] = new Div(
+            content: $content(new self())->render(),
             attributes: $attributes,
         );
 
@@ -246,6 +399,13 @@ class HushBuilder implements RenderableInterface
             alt: $alt,
             attributes: $attributes,
         );
+
+        return $this;
+    }
+
+    public function infoModal(string $title, string $message): self
+    {
+        $this->modals[] = new InfoModal(title: $title, message: $message);
 
         return $this;
     }
@@ -472,6 +632,34 @@ class HushBuilder implements RenderableInterface
     }
 
     /**
+     * @param array<string,string> $attributes
+     */
+    public function listHeader(
+        string $title,
+        string $subtitle = '',
+        string $createLabel = '',
+        string $createUrl = '',
+    ): self {
+        return $this->flex(
+            ['class' => 'justify-content-between align-items-center mb-5'],
+            [],
+            fn(self $h) => $h->flex(
+                ['class' => 'flex-column'],
+                [],
+                fn(self $h) => $h->heading($title, ['class' => 'margin-bottom-0']),
+                fn(self $h) => $h->if(
+                    $subtitle !== '',
+                    fn(self $h) => $h->html('<small class="list-header-subtitle">' . htmlspecialchars($subtitle) . '</small>')
+                ),
+            ),
+            fn(self $h) => $h->if(
+                $createLabel !== '' && $createUrl !== '',
+                fn(self $h) => $h->button($createLabel, $createUrl),
+            ),
+        );
+    }
+
+    /**
      * @template T
      *
      * @param T[] $rows
@@ -547,21 +735,20 @@ class HushBuilder implements RenderableInterface
         return $this;
     }
 
-    public function renderMinimized(): string
+    /**
+     * @param array<string,string> $attributes
+     */
+    public function progressBar(string $label, int $value, int $total, string $color = '#22c55e', array $attributes = []): self
     {
-        $content = $this->render();
+        $this->components[] = new Component\ProgressBar(
+            label: $label,
+            value: $value,
+            total: $total,
+            color: $color,
+            attributes: $attributes,
+        );
 
-        return preg_replace([
-            "/\n/",
-            '/>(  )*/',
-            '/[ ]*>/',
-            '/[ ]*</',
-        ], [
-            '',
-            '>',
-            '>',
-            '<',
-        ], $content);
+        return $this;
     }
 
     public function render(): string
@@ -580,6 +767,23 @@ class HushBuilder implements RenderableInterface
         return $content !== ''
             ? $content
             : $modalContent;
+    }
+
+    public function renderMinimized(): string
+    {
+        $content = $this->render();
+
+        return preg_replace([
+            "/\n/",
+            '/>(  )*/',
+            '/[ ]*>/',
+            '/[ ]*</',
+        ], [
+            '',
+            '>',
+            '>',
+            '<',
+        ], $content);
     }
 
     /**
@@ -641,9 +845,47 @@ class HushBuilder implements RenderableInterface
         return $this;
     }
 
+    /**
+     * @param array<string,string> $attributes
+     */
+    public function stat(string $label, string $value, string $icon = '', array $attributes = []): self
+    {
+        $this->components[] = new Component\Stat(
+            label: $label,
+            value: $value,
+            icon: $icon,
+            attributes: $attributes,
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param array<string,string> $attributes
+     */
+    public function statCard(string $label, string $value, string $subtext = '', string $icon = '', array $attributes = []): self
+    {
+        $this->components[] = new Component\StatCard(
+            label: $label,
+            value: $value,
+            subtext: $subtext,
+            icon: $icon,
+            attributes: $attributes,
+        );
+
+        return $this;
+    }
+
     public function style(string $content): self
     {
         $this->components[] = new Style(content: $content);
+
+        return $this;
+    }
+
+    public function successModal(string $heading = 'Success!', string $text = '', bool $isReloadNeeded = true): self
+    {
+        $this->modals[] = new SuccessModal(heading: $heading, text: $text, isReloadNeeded: $isReloadNeeded);
 
         return $this;
     }
@@ -716,6 +958,23 @@ class HushBuilder implements RenderableInterface
     }
 
     /**
+     * @param array<array{month: string, count: int}> $data
+     * @param array<string,string> $attributes
+     */
+    public function trendChart(string $id, string $label, array $data, string $color = '#3b82f6', array $attributes = []): self
+    {
+        $this->components[] = new Component\TrendChart(
+            id: $id,
+            label: $label,
+            data: $data,
+            color: $color,
+            attributes: $attributes,
+        );
+
+        return $this;
+    }
+
+    /**
      * @param array<string,string> $attributes
      */
     public function video(
@@ -726,6 +985,13 @@ class HushBuilder implements RenderableInterface
             source: $source,
             attributes: $attributes,
         );
+
+        return $this;
+    }
+
+    public function warningModal(string $heading = 'Warning!', string $text = ''): self
+    {
+        $this->modals[] = new WarningModal(heading: $heading, text: $text);
 
         return $this;
     }

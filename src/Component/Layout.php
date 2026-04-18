@@ -64,8 +64,10 @@ class Layout implements ComponentInterface
         </head>
 
         <body>
-            <div>
-                $this->content
+            <div id="app-root">
+                <div id="app-content">
+                    $this->content
+                </div>
             </div>
 
             <div class="modal-container" $modalContainerAttributes>

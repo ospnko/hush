@@ -13,13 +13,13 @@ class Input implements ComponentInterface
      * @param string[] $errors
      */
     public function __construct(
-        private string $type,
-        private string $name,
-        private string $placeholder,
-        private string $value,
-        private bool $isRequired = false,
-        private array $attributes = [],
-        private array $errors = [],
+        protected string $type,
+        protected string $name,
+        protected string $placeholder,
+        protected string $value,
+        protected bool $isRequired = false,
+        protected array $attributes = [],
+        protected array $errors = [],
     ) {
         $this->value = htmlspecialchars($value);
     }
@@ -40,9 +40,10 @@ class Input implements ComponentInterface
 
         $attributes = (new Attribute($this->attributes))->render();
         $errorsString = (new Error($this->errors))->render();
+        $escapedPlaceholder = htmlspecialchars($this->placeholder);
 
         return <<<HTML
-        <input type="$this->type" name="$this->name" value="$this->value" placeholder="$this->placeholder" $attributes>
+        <input type="$this->type" name="$this->name" value="$this->value" placeholder="$escapedPlaceholder" $attributes>
         $errorsString
         HTML;
     }
