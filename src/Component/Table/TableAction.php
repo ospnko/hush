@@ -23,7 +23,7 @@ class TableAction implements ComponentInterface
                 ? $this->icon
                 : $this->note,
             isAsyncModal: $this->isAsyncModal,
-            attributes: ['title' => $this->note],
+            attributes: ['title' => $this->note, 'class' => 'action-icon-btn'],
         ))->render();
     }
 }

@@ -1163,40 +1163,27 @@ menu.sticky > li > a.active {
     margin-top: 0;
 }
 
-.pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    margin-top: 24px;
+.pagination-bar {
+    width: fit-content;
+    margin: 24px auto 0 !important;
+    padding: 12px 16px !important;
 }
 
-.pagination > a {
-    padding: 8px 14px;
-    border-radius: 10px;
-    background: var(--sectionBackground);
-    color: var(--breadcrumbsTextColor);
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    box-shadow: var(--sectionShadow);
+.pagination-bar .admin-filter-bar {
+    gap: 6px;
 }
 
-.pagination > a:not([href="#"]):hover {
-    background: var(--buttonBackground);
-    color: var(--buttonColor);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.15), var(--buttonHoverShadow);
+.pagination-btn,
+.pagination-ellipsis {
+    min-width: 32px;
+    text-align: center;
+    padding: 8px 10px;
 }
 
-.pagination > .current {
+.pagination-ellipsis {
     cursor: default;
-    background: var(--buttonBackground);
-    color: var(--buttonColor);
-    padding: 8px 14px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 600;
+    opacity: 0.4;
+    pointer-events: none;
 }
 
 .progress-bar {
@@ -1318,8 +1305,7 @@ section h1 {
 
 /* Ensure subsequent blocks are not affected */
 section + section,
-section + .block,
-section + .pagination {
+section + .block {
     margin-top: 24px;
 }
 

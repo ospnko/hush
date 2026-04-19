@@ -27,9 +27,11 @@ class Pagination implements ComponentInterface
         $pages = $this->renderPages();
 
         return <<<HTML
-        <div class="pagination">
-            $pages
-        </div>
+        <section class="block pagination-bar">
+            <div class="admin-filter-bar">
+                $pages
+            </div>
+        </section>
         HTML;
     }
 
@@ -39,16 +41,21 @@ class Pagination implements ComponentInterface
 
         foreach ($this->buildPages() as $page) {
             $params = $this->params;
-            $params['page'] = $page;
+            $params[$this->paramName] = $page;
             $isCurrent = $page === $this->currentPage;
 
-            $result[] = (new Link(
-                link: $page !== null && !$isCurrent
-                    ? $this->baseLink . '?' . http_build_query($params)
-                    : '#',
-                content: $page ?? '...',
-                attributes: $isCurrent ? ['class' => 'current'] : [],
-            ))->render();
+            if ($page === null) {
+                $result[] = '<span class="admin-filter-link pagination-ellipsis">…</span>';
+                continue;
+            }
+
+            $href = !$isCurrent
+                ? $this->baseLink . '?' . http_build_query($params)
+                : '#';
+
+            $activeClass = $isCurrent ? ' active' : '';
+            $result[] = '<a href="' . htmlspecialchars($href) . '" class="admin-filter-link pagination-btn' . $activeClass . '">'
+                . htmlspecialchars((string)$page) . '</a>';
         }
 
         return implode("\n", $result);
